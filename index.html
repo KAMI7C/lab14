@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Защита контента</title>
+    <style>
+        /* 1. Запрет выделения текста через CSS */
+        .protected-text {
+            -webkit-user-select: none; /* Для Chrome, Safari, Opera */
+            -moz-user-select: none;    /* Для Firefox */
+            -ms-user-select: none;     /* Для IE/Edge */
+            user-select: none;         /* Стандарт */
+            cursor: default;
+        }
+    </style>
+</head>
+<body class="protected-text">
+
+    <h2>Этот текст нельзя скопировать (по крайней мере, обычным способом)</h2>
+    <p>Попробуйте выделить этот текст мышкой или нажать Ctrl+A, а затем Ctrl+C. Ничего не выйдет.</p>
+
+    <script>
+        // 2. Блокировка контекстного меню (ПКМ)
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 3. Блокировка горячих клавиш (Ctrl+C, Ctrl+X, Ctrl+A, Ctrl+U)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'a' || e.key === 'u')) {
+                e.preventDefault();
+                alert('Копирование заблокировано!');
+            }
+        });
+
+        // 4. Блокировка события copy
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            alert('Копирование текста запрещено!');
+        });
+    </script>
+
+</body>
+</html>
